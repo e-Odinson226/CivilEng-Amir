@@ -83,18 +83,40 @@ try:
                                         
                 }
         mainList.append(dct)
-    print(mainList)  
+    #for figure in mainList:
+    #    print(figure.get(0))
 except Exception:
     raise Exception
 
 #-----------------------------------------------------------
-"""           
-    diff = 0.0
-    i = 0
-    for num in values:
-        diff = float( math.sqrt ( ( float(values[rand]) - float(num) )**2 ) )
-        diff = float( format( diff, '.4f') )
-        i += 1
-        j += 1
-        print("----", i, "Diff: ", diff)
-    print(j, '----------------------') """
+#{'s':'w'}.
+try:
+    for figure in mainList:
+        valueList = []
+        dicts = figure.get(list(figure.keys())[0])
+        
+        try:
+            tDiff = 0.0
+            mValues = dicts.get('mValues')
+            rValues = dicts.get('rValues')
+            j = 0
+            for mval in mValues:
+                i = 0
+                diff = 0.0
+                for rval in rValues:
+                    diff = float( math.sqrt ( ( float(mval) - float(rval) )**2 ) )
+                    diff = float( format( diff, '.4f') )
+                    i += 1
+                    j += 1
+                    tDiff += diff
+                    tDiff = float( format( tDiff, '.4f') )
+                    print("----", i, "Diff: ", diff)
+                print("-----------", j, "tDiff: ", tDiff)
+        except Exception:
+            raise Exception
+        print(mValues)
+        print("*********************************************")
+
+except Exception:
+    raise Exception          
+    
