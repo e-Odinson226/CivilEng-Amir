@@ -1,1 +1,1 @@
-value
+math.sqrt((float(values[rand]) - float(num))**2 )
