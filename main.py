@@ -9,7 +9,7 @@ def numberCleaner(phrase):
 def summation(lst):
     sum = 0
     for i in lst:
-        sum += int(i)
+        sum += float(i)
     return sum
 
 BaseDir = Path(__file__).resolve().parent
@@ -34,12 +34,14 @@ else:
 
 #-----------------------------------------------------------
 try:
-    for dic in dicts:
-        try:
-            sum = summation(list(dic.values())[0])
-            print(list(dic.values())[0], " --> ", sum)
-        except Exception:
-            print("Minor ERROR!!!")
+    for dct in dicts:
+        newValueList = []
+        sum = summation(list(dct.values())[0])
+        for key, values in dct.items():
+            for value in values:
+                newValueList.append (format ((float(value) / sum), '.4f'))
+            dct = { key : newValueList}
         
 except Exception:
-    print("ERROR!!!")
+    raise Exception
+    #print("ERROR!!!")
