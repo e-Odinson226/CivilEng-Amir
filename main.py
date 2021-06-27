@@ -89,34 +89,43 @@ except Exception:
     raise Exception
 
 #-----------------------------------------------------------
-#{'s':'w'}.
 try:
-    for figure in mainList:
-        valueList = []
-        dicts = figure.get(list(figure.keys())[0])
-        
+    with open("output.txt", "w") as file:
         try:
-            tDiff = 0.0
-            mValues = dicts.get('mValues')
-            rValues = dicts.get('rValues')
-            j = 0
-            for mval in mValues:
-                i = 0
-                diff = 0.0
-                for rval in rValues:
-                    diff = float( math.sqrt ( ( float(mval) - float(rval) )**2 ) )
-                    diff = float( format( diff, '.4f') )
-                    i += 1
-                    j += 1
-                    tDiff += diff
-                    tDiff = float( format( tDiff, '.4f') )
-                    print("----", i, "Diff: ", diff)
-                print("-----------", j, "tDiff: ", tDiff)
-        except Exception:
-            raise Exception
-        print(mValues)
-        print("*********************************************")
+            for figure in mainList:
+                file.write("**********************************************\n")
+                file.write("**\t\t\t\t    Row: " + str( list( figure.keys() )[0]) + '    \t\t\t\t**\n')
+                file.write("**********************************************\n")
+                valueList = []
+                dicts = figure.get(list(figure.keys())[0])
+                
+                try:
+                    tDiff = 0.0
+                    mValues = dicts.get('mValues')
+                    rValues = dicts.get('rValues')
+                    j = 0
+                    for mval in mValues:
+                        file.write("markaz: "+ mval+ " -----------\n")
+                        i = 0
+                        diff = 0.0
+                        for rval in rValues:
+                            diff = float( math.sqrt ( ( float(mval) - float(rval) )**2 ) )
+                            diff = float( format( diff, '.4f') )
+                            i += 1
+                            j += 1
+                            tDiff += diff
+                            tDiff = float( format( tDiff, '.4f') )
+                            file.write("----%s Diff: %s \n" % (str(rval), str(diff)))
+                        
+                except Exception:
+                    raise Exception
 
+
+        except Exception:
+            raise Exception   
 except Exception:
-    raise Exception          
+    raise Exception
+
+#-----------------------------------------------------------
+       
     
