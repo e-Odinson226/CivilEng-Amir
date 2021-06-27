@@ -13,6 +13,15 @@ def summation(lst):
         sum += float(i)
     return sum
 
+def generateRL():
+    rndList = []
+    random.seed()
+    while len(rndList)<5:
+        x = random.randint(0,9)
+        if x not in rndList:
+            rndList.append(x)
+    return rndList
+
 BaseDir = Path(__file__).resolve().parent
 #-----------------------------------------------------------
 try:
@@ -50,27 +59,42 @@ except Exception:
     print("خطا در نرمالسازی!!!")
 
 #-----------------------------------------------------------
+mainList = []
 try:
     for dct in dicts:
-        rndList = []
-        while len(rndList)<5:
-            random.seed()
-            x = random.randint(0,9)
-            if x not in rndList:
-                rndList.append(x)
-        diffList = []
-        j = 0
-        for rand in rndList:
-            values = list(dct.values())[0]
-            diff = 0.0
-            i = 0
-            for num in values:
-                diff = float( math.sqrt ( ( float(values[rand]) - float(num) )**2 ) )
-                diff = float( format( diff, '.4f') )
-                i += 1
-                j += 1
-                print("----", i, "Diff: ", diff)
-            print(j, '----------------------')
-                
+        mMarks = generateRL()
+        values = list(dct.values())[0]
+
+        rValues = []
+        for i in range(0, len(values)):
+            if not (i in mMarks):
+                rValues.append(values[i])
+        #print(rValues)
+        
+        mValues = []
+        for i in range(0, len(values)):
+            if i in mMarks:
+                mValues.append(values[i])
+        #print(mValues)
+        print()
+        dct = { list(dct.keys())[0] : {
+                                        'rValues' : rValues,
+                                        'mValues' : mValues,    }
+                                        
+                }
+        mainList.append(dct)
+    print(mainList)  
 except Exception:
     raise Exception
+
+#-----------------------------------------------------------
+"""           
+    diff = 0.0
+    i = 0
+    for num in values:
+        diff = float( math.sqrt ( ( float(values[rand]) - float(num) )**2 ) )
+        diff = float( format( diff, '.4f') )
+        i += 1
+        j += 1
+        print("----", i, "Diff: ", diff)
+    print(j, '----------------------') """
