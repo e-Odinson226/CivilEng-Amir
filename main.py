@@ -89,40 +89,6 @@ except Exception:
     raise Exception
 
 #-----------------------------------------------------------
-clusterLists = []
-try:
-    for figure in mainList:
-        dicts = figure.get(list(figure.keys())[0])
-        
-        try:
-            tDiff = 0.0
-            mValues = dicts.get('mValues')
-            rValues = dicts.get('rValues')
-
-            for mval in mValues:
-                print("---------- Markaz: ", mval,"----------")
-                cluster = {}
-                mainDiff = 0.0
-                
-                for rval in rValues:
-                    diff = float( math.sqrt ( ( float(mval) - float(rval) )**2 ) )
-                    diff = float( format( diff, '.4f') )
-                    
-                    if diff < mainDiff or mainDiff == 0:
-                        mainDiff = diff
-                        cluster = { mval : rval}
-
-                    print("Data: ", rval)
-        clusterDict = {list(figure.keys())[0] : cluster}
-                print("Cluster: ", cluster,"\n")
-                
-        except Exception:
-            raise Exception
-
-except Exception:
-    raise Exception
-
-#-----------------------------------------------------------
 try:
     with open("output.txt", "w") as file:
         for figure in mainList:
@@ -135,24 +101,66 @@ try:
                 tDiff = 0.0
                 mValues = dicts.get('mValues')
                 rValues = dicts.get('rValues')
-                j = 0
+
                 for mval in mValues:
-                    file.write("markaz: "+ mval+ " -----------\n")
-                    i = 0
-                    diff = 0.0
+                    file.write("---------- Markaz: "+ mval+"----------\n")
+                    cluster = {}
+                    mainDiff = 0.0
+                    
                     for rval in rValues:
                         diff = float( math.sqrt ( ( float(mval) - float(rval) )**2 ) )
                         diff = float( format( diff, '.4f') )
-                        i += 1
-                        j += 1
-                        tDiff += diff
-                        tDiff = float( format( tDiff, '.4f') )
-                        file.write("----%s Diff: %s \n" % (str(rval), str(diff)))
+                        
+                        if diff < mainDiff or mainDiff == 0:
+                            mainDiff = diff
+                            cluster = { mval : rval}
+
+                        file.write("Data: "+ rval+ "\n")
+                    markaz, jazb = list( cluster.items())[0] 
+                    file.write("Cluster: "+ "[ {} : {} ]".format(markaz, jazb)+ "\n\n")
                     
             except Exception:
                 raise Exception
 
- 
 except Exception:
     raise Exception
 
+""" #-----------------------------------------------------------
+try:
+    with open("output.txt", "w") as file:
+        try:
+            for figure in mainList:
+                file.write("**********************************************\n")
+                file.write("**\t\t\t\t    Row: " + str( list( figure.keys() )[0]) + '    \t\t\t\t**\n')
+                file.write("**********************************************\n")
+                valueList = []
+                dicts = figure.get(list(figure.keys())[0])
+                
+                try:
+                    tDiff = 0.0
+                    mValues = dicts.get('mValues')
+                    rValues = dicts.get('rValues')
+                    j = 0
+                    for mval in mValues:
+                        file.write("markaz: "+ mval+ " -----------\n")
+                        i = 0
+                        diff = 0.0
+                        for rval in rValues:
+                            diff = float( math.sqrt ( ( float(mval) - float(rval) )**2 ) )
+                            diff = float( format( diff, '.4f') )
+                            i += 1
+                            j += 1
+                            tDiff += diff
+                            tDiff = float( format( tDiff, '.4f') )
+                            file.write("----%s Diff: %s \n" % (str(rval), str(diff)))
+                        
+                except Exception:
+                    raise Exception
+
+
+        except Exception:
+            raise Exception   
+except Exception:
+    raise Exception
+
+ """
